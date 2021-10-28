@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31025.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDS Fullfillment", "MDS Fullfillment\MDS Fullfillment.csproj", "{3C81E794-B306-491F-AE4E-D05B39A8E0E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MDS Fullfillment", "MDS Fullfillment\MDS Fullfillment.csproj", "{3C81E794-B306-491F-AE4E-D05B39A8E0E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -72,7 +72,9 @@ namespace MDS_Fullfillment.Models
                 //Query each of the three tables and populate the lists
                 try
                 {
+                    //verify table name
                     string query = @"Select Rtrim(AccountNumber), Rtrim(AccountName) From DC00MDS.dbo.Client Where Status = 23 Order By AccountName";
+                    
                     SqlCommand cmd = new SqlCommand(query, con);
 
                     SqlDataReader reader = cmd.ExecuteReader();
