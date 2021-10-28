@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>MDS_Fullfillment</RootNamespace>
+    <UserSecretsId>82dadb69-5dfd-4ba9-b276-b1ecfb6e5713</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="axios" Version="0.16.2" />
+    <PackageReference Include="bootstrap" Version="5.1.2" />
+    <PackageReference Include="jQuery" Version="3.6.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+</Project>

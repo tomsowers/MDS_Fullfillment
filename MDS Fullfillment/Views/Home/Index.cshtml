@@ -1,0 +1,192 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">MDS Fullfillment Time Log</h1>
+    <p>Record Your Task With The Below Menu.</p>
+    <div class="row mt-3">
+        <div class="col">
+            <select class="form-select" aria-label="User Menu" id="UserMenu">
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <select class="form-select form-select-lg" aria-label="Account Menu" id="AccountMenu">
+            </select>
+        </div>
+
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <select class="form-select form-select-lg" aria-label="Task Menu" id="TaskMenu">
+            </select>
+        </div>
+
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <div class="form-group">
+                <button type="button" onclick="StartTask()" class="btn-lg btn-primary">Start Task</button>
+                
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <div class="form-group">
+               
+                <button type="button" onclick="EndDay()" class="btn-lg btn-secondary">End of Day</button>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<script type="text/javascript">
+    //will need to pull data from the api here and populate the selects with the actual data
+    let dropdownTask = document.getElementById('TaskMenu');
+    dropdownTask.length = 0;
+
+    let defaultOptionTask = document.createElement('option');
+    defaultOptionTask.text = 'Choose Your Task';
+    defaultOptionTask.value = 0;
+
+    dropdownTask.add(defaultOptionTask);
+    dropdownTask.selectedIndex = 0;
+
+    let dropdownAccount = document.getElementById('AccountMenu');
+    dropdownAccount.length = 0;
+
+    let defaultOptionAcc = document.createElement('option');
+    defaultOptionAcc.text = 'Choose Your Account';
+    defaultOptionAcc.value = 0;
+    dropdownAccount.add(defaultOptionAcc);
+    dropdownAccount.selectedIndex = 0;
+
+    let dropdownUsr = document.getElementById('UserMenu');
+    dropdownUsr.length = 0;
+
+    let defaultOptionUsr = document.createElement('option');
+    defaultOptionUsr.text = 'Select Your Username';
+    defaultOptionUsr.value = 0;
+    dropdownUsr.add(defaultOptionUsr);
+    dropdownUsr.selectedIndex = 0;
+
+    axios({
+        method: 'get',
+        url: '/Home/TimeInterfaceData'
+    }).then((response) => {
+        try {
+            const data = JSON.parse(response.data);
+            window.sessionStorage
+            for (let i = 0; i < data.Tasks.length; i++) {
+                option = document.createElement('option');
+                option.text = data.Tasks[i].TaskID + " - " + data.Tasks[i].TaskName;
+                option.value = data.Tasks[i].TaskID;
+                
+                dropdownTask.add(option);
+            }
+
+            for (let i = 0; i < data.Accounts.length; i++) {
+                option = document.createElement('option');
+                option.text = data.Accounts[i].AccountID + " - " + data.Accounts[i].AccountName;
+                option.value = data.Accounts[i].AccountID;
+             
+                dropdownAccount.add(option);
+            }
+
+            for (let i = 0; i < data.Users.length; i++) {
+                option = document.createElement('option');
+                option.text = data.Users[i].UserID + " - " + data.Users[i].UserName;
+                option.value = data.Users[i].UserID;
+               
+                dropdownUsr.add(option);
+            }
+        }
+        catch (error) {
+
+        }
+    })
+
+    function StartTask() {
+        //regular
+        var task = document.getElementById('TaskMenu');
+        var account = document.getElementById('AccountMenu');
+        var user = document.getElementById('UserMenu');
+
+        var taskVal = task.value;
+        var accVal = account.value;
+        var userVal = user.value;
+
+        if (userVal == 0)
+        {
+            alert('Please Enter User');
+            
+        }
+        else if (accVal == 0)
+        {
+            alert('Please Enter Account');
+        }
+        else if (taskVal == 0)
+        {
+            alert('Please Enter Task');
+        }
+        else
+        {
+            axios({
+                method: 'put',
+                url: '/Home/TimeData',
+                params: {
+                    account: parseInt(accVal, 10),
+                    user: parseInt(userVal, 10),
+                    task: parseInt(taskVal, 10)
+                }
+            });
+
+            alert('Data Submitted!');
+            location.reload();
+        }
+        
+    }
+
+    function EndDay() {
+        //regular
+        var task = document.getElementById('TaskMenu');
+        var account = document.getElementById('AccountMenu');
+        var user = document.getElementById('UserMenu');
+
+        var taskVal = task.value;
+        var accVal = account.value;
+        var userVal = user.value;
+
+        if (userVal == 0) {
+            alert('Please Enter User');
+
+        }
+        
+        else {
+            axios({
+                method: 'put',
+                url: '/Home/TimeDataEnd',
+                params: {
+                    account: parseInt(accVal, 10),
+                    user: parseInt(userVal, 10),
+                    task: parseInt(taskVal, 10)
+                }
+            });
+
+            alert('Data Submitted!');
+            location.reload();
+        }
+
+    }
+
+  
+</script>
