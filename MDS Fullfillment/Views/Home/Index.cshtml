@@ -3,7 +3,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">MDS Fullfillment Time Log</h1>
+    <h1 class="display-4">MDS Fulfillment Time Log</h1>
     <p>Record Your Task With The Below Menu.</p>
     <div class="row mt-3">
         <div class="col">
@@ -85,7 +85,7 @@
     }).then((response) => {
         try {
             const data = JSON.parse(response.data);
-            window.sessionStorage
+            
             for (let i = 0; i < data.Tasks.length; i++) {
                 option = document.createElement('option');
                 option.text = data.Tasks[i].TaskID + " - " + data.Tasks[i].TaskName;

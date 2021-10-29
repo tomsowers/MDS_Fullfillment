@@ -47,16 +47,24 @@ namespace MDS_Fullfillment.Models
     public static class DataCon
     {
         //private static string conStr = @"Data Source=DESKTOP-R4OM28D\SQLEXPRESS;Initial Catalog=Aeragen;User ID=sa;Password=";
-        private static string conStr = @"Data Source=PRD-V-SQL-01;Initial Catalog=MDS;User ID=Client;Password=Electronics1!";
+        private static string conStr = @"Data Source=PRD-V-SQL-01;Initial Catalog=MDS;User ID=bchaikin;Password=brian12";
 
         private static SqlConnection con = new SqlConnection(conStr);
         public static void GetTimeInterfaceData()
         {
-            SQLGetAccounts();
+            try
+            {
+                SQLGetAccounts();
 
-            SQLGetUsers();
+                SQLGetUsers();
 
-            SQLGetTasks();
+                SQLGetTasks();
+            }
+            catch
+            {
+
+            }
+            
 
 
         }
@@ -110,7 +118,7 @@ namespace MDS_Fullfillment.Models
                 //Query each of the three tables and populate the lists
                 try
                 {
-                    string query = @"Select EmployeeNo, Employee_NameFirst + Employee_NameLast From MDS.dbo.MDS_Payroll_Employee Order By Employee_NameFirst";
+                    string query = @"Select EmployeeNo, Employee_NameFirst +' '+ Employee_NameLast From MDS.dbo.MDS_Payroll_Employee Order By Employee_NameFirst";
                     SqlCommand cmd = new SqlCommand(query, con);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -199,7 +207,7 @@ namespace MDS_Fullfillment.Models
                 con.Open();
                 try
                 {
-                    string query = "update dbo.Times set EndTime = @Time where EndTime is null and EmployeeNo = @UserID";
+                    string query = "update dbo.MDS_Production_WebApp set EndTime = @Time where EndTime is null and UserID = @UserID";
                     SqlCommand cmd = new SqlCommand(query, con);
 
                     cmd.Parameters.AddWithValue("@UserID", timeRecord.user);
@@ -227,7 +235,7 @@ namespace MDS_Fullfillment.Models
                 con.Open();
                 try
                 {
-                    string query = "Insert into dbo.MDS_Production_WebApp (Code, AccountNumber, EmployeeNo, StartTime) values (@Task, @AccNum, @UserID, @Time) ";
+                    string query = "Insert into dbo.MDS_Production_WebApp (Task, Account, UserID, StartTime) values (@Task, @AccNum, @UserID, @Time) ";
                     SqlCommand cmd = new SqlCommand(query, con);
                     cmd.Parameters.AddWithValue("@Task", timeRecord.task);
                     cmd.Parameters.AddWithValue("@AccNum", timeRecord.account);
