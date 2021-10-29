@@ -7,43 +7,53 @@
     <p>Record Your Task With The Below Menu.</p>
     <div class="row mt-3">
         <div class="col">
-            <select class="form-select" aria-label="User Menu" id="UserMenu">
-            </select>
+
         </div>
-    </div>
-
-    <div class="row mt-3">
         <div class="col">
-            <select class="form-select form-select-lg" aria-label="Account Menu" id="AccountMenu">
-            </select>
-        </div>
+            
+            <div class="input-group mb-3">
+                <select class="form-control selectpicker" tabindex="1" name="part" data-live-search="true" required id="UsernameList">
+                    <option value="Select Username">Select Username...</option>
 
-    </div>
+                </select>
+            </div>
+            
 
-    <div class="row mt-3">
-        <div class="col">
-            <select class="form-select form-select-lg" aria-label="Task Menu" id="TaskMenu">
-            </select>
-        </div>
-
-    </div>
-
-    <div class="row mt-3">
-        <div class="col">
-            <div class="form-group">
-                <button type="button" onclick="StartTask()" class="btn-lg btn-primary">Start Task</button>
+            
+            <div class="input-group mb-3">
                 
+
+                <select class="form-control selectpicker" tabindex="2" name="part" data-live-search="true" required id="AccountMenu">
+                    <option value="Select Account">Select Account...</option>
+
+                </select>
             </div>
+            <div class="input-group mb-3">
+                
+                <select class="form-control selectpicker" tabindex="3" name="part" data-live-search="true" required id="TaskMenu">
+                    <option value="Select Username">Select Task...</option>
+
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <button type="button" onclick="StartTask()" tabindex="4" class="btn-lg btn-primary">Start Task</button>
+
+            </div>
+            <div class="input-group mb-3">
+
+                <button type="button" onclick="EndDay()" tabindex="5" class="btn-lg btn-secondary">End of Day</button>
+
+            </div>
+
         </div>
-    </div>
-    <div class="row mt-3">
         <div class="col">
-            <div class="form-group">
-               
-                <button type="button" onclick="EndDay()" class="btn-lg btn-secondary">End of Day</button>
-            </div>
+            <ul class="list-group" id="TaskList">
+                
+            </ul>
         </div>
     </div>
+    
+    
 
 
 
@@ -52,32 +62,12 @@
 <script type="text/javascript">
     //will need to pull data from the api here and populate the selects with the actual data
     let dropdownTask = document.getElementById('TaskMenu');
-    dropdownTask.length = 0;
-
-    let defaultOptionTask = document.createElement('option');
-    defaultOptionTask.text = 'Choose Your Task';
-    defaultOptionTask.value = 0;
-
-    dropdownTask.add(defaultOptionTask);
-    dropdownTask.selectedIndex = 0;
-
+    
     let dropdownAccount = document.getElementById('AccountMenu');
-    dropdownAccount.length = 0;
+    
+    let dropdownUserName = document.getElementById('UsernameList');
 
-    let defaultOptionAcc = document.createElement('option');
-    defaultOptionAcc.text = 'Choose Your Account';
-    defaultOptionAcc.value = 0;
-    dropdownAccount.add(defaultOptionAcc);
-    dropdownAccount.selectedIndex = 0;
-
-    let dropdownUsr = document.getElementById('UserMenu');
-    dropdownUsr.length = 0;
-
-    let defaultOptionUsr = document.createElement('option');
-    defaultOptionUsr.text = 'Select Your Username';
-    defaultOptionUsr.value = 0;
-    dropdownUsr.add(defaultOptionUsr);
-    dropdownUsr.selectedIndex = 0;
+    let taskList =  document.getElementById('TaskList')
 
     axios({
         method: 'get',
@@ -88,10 +78,15 @@
             
             for (let i = 0; i < data.Tasks.length; i++) {
                 option = document.createElement('option');
-                option.text = data.Tasks[i].TaskID + " - " + data.Tasks[i].TaskName;
+                option.innerHTML = data.Tasks[i].TaskID + " - " + data.Tasks[i].TaskName;
                 option.value = data.Tasks[i].TaskID;
                 
-                dropdownTask.add(option);
+                dropdownTask.appendChild(option);
+
+                let li = document.createElement("li");
+                li.innerHTML = option.text;
+                li.classList.add("list-group-item");
+                taskList.appendChild(li);
             }
 
             for (let i = 0; i < data.Accounts.length; i++) {
@@ -99,15 +94,15 @@
                 option.text = data.Accounts[i].AccountID + " - " + data.Accounts[i].AccountName;
                 option.value = data.Accounts[i].AccountID;
              
-                dropdownAccount.add(option);
+                dropdownAccount.appendChild(option);
             }
 
             for (let i = 0; i < data.Users.length; i++) {
-                option = document.createElement('option');
-                option.text = data.Users[i].UserID + " - " + data.Users[i].UserName;
-                option.value = data.Users[i].UserID;
-               
-                dropdownUsr.add(option);
+                
+                let newUser = document.createElement('option');
+                newUser.value = data.Users[i].UserID;
+                newUser.innerHTML = data.Users[i].UserID + " - " + data.Users[i].UserName;
+                dropdownUserName.appendChild(newUser);
             }
         }
         catch (error) {

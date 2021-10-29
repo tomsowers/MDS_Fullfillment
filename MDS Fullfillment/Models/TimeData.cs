@@ -46,8 +46,8 @@ namespace MDS_Fullfillment.Models
     }
     public static class DataCon
     {
-        //private static string conStr = @"Data Source=DESKTOP-R4OM28D\SQLEXPRESS;Initial Catalog=Aeragen;User ID=sa;Password=";
-        private static string conStr = @"Data Source=PRD-V-SQL-01;Initial Catalog=MDS;User ID=bchaikin;Password=brian12";
+        private static string conStr = @"Data Source=DESKTOP-R4OM28D\SQLEXPRESS;Initial Catalog=Aeragen;User ID=sa;Password=Electronics1!";
+        //private static string conStr = @"Data Source=PRD-V-SQL-01;Initial Catalog=MDS;User ID=bchaikin;Password=brian12";
 
         private static SqlConnection con = new SqlConnection(conStr);
         public static void GetTimeInterfaceData()
@@ -81,7 +81,9 @@ namespace MDS_Fullfillment.Models
                 try
                 {
                     //verify table name
-                    string query = @"Select Rtrim(AccountNumber), Rtrim(AccountName) From DC00MDS.dbo.Client Where Status = 23 Order By AccountName";
+                    string query = @"Select * from Accounts";
+
+                    //string query = @"Select Rtrim(AccountNumber), Rtrim(AccountName) From DC00MDS.dbo.Client Where Status = 23 Order By AccountName";
                     
                     SqlCommand cmd = new SqlCommand(query, con);
 
@@ -118,7 +120,9 @@ namespace MDS_Fullfillment.Models
                 //Query each of the three tables and populate the lists
                 try
                 {
-                    string query = @"Select EmployeeNo, Employee_NameFirst +' '+ Employee_NameLast From MDS.dbo.MDS_Payroll_Employee Order By Employee_NameFirst";
+                    string query = @"Select * From Users";
+
+                    //string query = @"Select EmployeeNo, Employee_NameFirst +' '+ Employee_NameLast From MDS.dbo.MDS_Payroll_Employee Order By Employee_NameFirst";
                     SqlCommand cmd = new SqlCommand(query, con);
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -155,7 +159,9 @@ namespace MDS_Fullfillment.Models
                 //Query each of the three tables and populate the lists
                 try
                 {
-                    string query = @"Select Code, Description From MDS.dbo.MDS_Production_Codes Where Prod_Group = 'Warehouse' Order By Code";
+                    string query = @"Select * From Tasks ";
+
+                    //string query = @"Select Code, Description From MDS.dbo.MDS_Production_Codes Where Prod_Group = 'Warehouse' Order By Code";
                     SqlCommand cmd = new SqlCommand(query, con);
 
                     SqlDataReader reader = cmd.ExecuteReader();
