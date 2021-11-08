@@ -11,7 +11,7 @@
             
             <div class="input-group mb-3">
                 <select class="form-control selectpicker" tabindex="1" name="part" data-live-search="true" required id="UsernameList">
-                    <option value="Select Username">Select Username...</option>
+                    <option value="0">Select Username...</option>
 
                 </select>
             </div>
@@ -39,7 +39,7 @@
             </div>
             <div class="input-group justify-content-center mb-3">
 
-                <button type="button" onclick="EndDay()" tabindex="5" class="btn-lg btn-secondary">End of Day</button>
+                <button type="button" onclick="EndDay()" tabindex="5" class="btn-lg btn-secondary">End Task</button>
 
             </div>
 
@@ -73,6 +73,7 @@
     }).then((response) => {
         try {
             const data = JSON.parse(response.data);
+
             
             for (let i = 0; i < data.Tasks.length; i++) {
                 let option = document.createElement('option');
@@ -108,11 +109,14 @@
         }
     })
 
+
+
+
     function StartTask() {
         //regular
         var task = document.getElementById('TaskMenu');
         var account = document.getElementById('AccountMenu');
-        var user = document.getElementById('UserMenu');
+        var user = document.getElementById('UsernameList');
 
         var taskVal = task.value;
         var accVal = account.value;
@@ -153,7 +157,7 @@
         //regular
         var task = document.getElementById('TaskMenu');
         var account = document.getElementById('AccountMenu');
-        var user = document.getElementById('UserMenu');
+        var user = document.getElementById('UsernameList');
 
         var taskVal = task.value;
         var accVal = account.value;
@@ -180,6 +184,6 @@
         }
 
     }
-
+    
   
 </script>
